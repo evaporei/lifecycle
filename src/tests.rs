@@ -57,6 +57,12 @@ impl<'a> Database<'a> {
 
 struct Connection;
 
+fn connect_to_database(_host: &str, _port: &str) -> Connection {
+    println!("Opening database connection");
+
+    Connection
+}
+
 impl Connection {
     fn execute_query(&self, _args: &[&str]) -> QueryResult {
         println!("execute_query");
@@ -78,12 +84,6 @@ enum QueryResult {
     Search,
     Insert,
     Error,
-}
-
-fn connect_to_database(_host: &str, _port: &str) -> Connection {
-    println!("Opening database connection");
-
-    Connection
 }
 
 #[test]
