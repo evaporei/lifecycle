@@ -1,4 +1,5 @@
 use crate::Lifecycle;
+use std::sync::Arc;
 
 pub struct Database<'a> {
     host: &'a str,
@@ -84,4 +85,71 @@ pub enum QueryResult {
     Search,
     Insert,
     Error,
+}
+
+struct Scheduler;
+
+impl Lifecycle for Scheduler {}
+
+#[derive(Clone)]
+pub struct ConfigOptions<'a> {
+    host: &'a str,
+    port: &'a str,
+}
+
+impl<'a> ConfigOptions<'a> {
+    pub fn new(host: &'a str, port: &'a str) -> Self {
+        Self { host, port }
+    }
+}
+
+pub struct App<'a> {
+    options: ConfigOptions<'a>,
+    cache: Arc<()>,
+}
+
+impl<'a> App<'a> {
+    fn new(options: ConfigOptions<'a>) -> Self {
+        Self {
+            options,
+            cache: Arc::new(()),
+        }
+    }
+}
+
+impl Lifecycle for App<'_> {}
+
+pub struct ExampleSystem<'a> {
+    db: Database<'a>,
+    scheduler: Scheduler,
+    app: App<'a>,
+    config_options: ConfigOptions<'a>,
+}
+
+impl<'a> ExampleSystem<'a> {
+    pub fn new(config_options: ConfigOptions<'a>) -> Self {
+        Self {
+            db: Database::new(config_options.host, config_options.port),
+            scheduler: Scheduler,
+            app: App::new(config_options.clone()),
+            config_options,
+        }
+    }
+}
+
+impl Lifecycle for ExampleSystem<'_> {
+    fn start(self) -> Self {
+        let mut system = self;
+        system.db = system.db.start();
+        system.scheduler = system.scheduler.start();
+        system.app = system.app.start();
+        system
+    }
+    fn stop(self) -> Self {
+        let mut system = self;
+        system.app = system.app.stop();
+        system.scheduler = system.scheduler.stop();
+        system.db = system.db.stop();
+        system
+    }
 }

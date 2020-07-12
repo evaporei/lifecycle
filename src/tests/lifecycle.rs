@@ -1,5 +1,5 @@
-use crate::Lifecycle;
 use crate::tests::mocks::{Database, QueryResult};
+use crate::Lifecycle;
 
 #[test]
 fn simple_database() {
