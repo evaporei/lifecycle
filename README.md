@@ -2,6 +2,8 @@
 
 Rust implementation of https://github.com/stuartsierra/component.
 
+This library is still in development, a lot isn't supported yet (unnamed structs, unit structs, enums, etc).
+
 ## Usage
 
 ```toml
