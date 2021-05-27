@@ -16,3 +16,8 @@ proc-macro2 = "1.0"
 
 [dev-dependencies]
 trybuild = { version = "1.0", features = ["diff"] }
+
+[dev-dependencies.cargo-husky]
+version = "1"
+default-features = false
+features = ["user-hooks"]
