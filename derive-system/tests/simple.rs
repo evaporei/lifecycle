@@ -12,9 +12,9 @@ impl Lifecycle for Database {}
 
 #[derive(System)]
 pub struct ExampleSystem {
-    app: App,
-    scheduler: Scheduler,
-    database: Database,
+    _app: App,
+    _scheduler: Scheduler,
+    _database: Database,
 }
 
 fn main() {

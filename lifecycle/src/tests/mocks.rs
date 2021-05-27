@@ -104,15 +104,15 @@ impl<'a> ConfigOptions<'a> {
 }
 
 pub struct App<'a> {
-    options: ConfigOptions<'a>,
-    cache: Arc<()>,
+    _options: ConfigOptions<'a>,
+    _cache: Arc<()>,
 }
 
 impl<'a> App<'a> {
     fn new(options: ConfigOptions<'a>) -> Self {
         Self {
-            options,
-            cache: Arc::new(()),
+            _options: options,
+            _cache: Arc::new(()),
         }
     }
 }
@@ -123,7 +123,7 @@ pub struct ExampleSystem<'a> {
     db: Database<'a>,
     scheduler: Scheduler,
     app: App<'a>,
-    config_options: ConfigOptions<'a>,
+    _config_options: ConfigOptions<'a>,
 }
 
 impl<'a> ExampleSystem<'a> {
@@ -132,7 +132,7 @@ impl<'a> ExampleSystem<'a> {
             db: Database::new(config_options.host, config_options.port),
             scheduler: Scheduler,
             app: App::new(config_options.clone()),
-            config_options,
+            _config_options: config_options,
         }
     }
 }
