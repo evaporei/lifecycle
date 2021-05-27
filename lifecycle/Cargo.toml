@@ -3,6 +3,11 @@ name = "lifecycle"
 version = "0.1.0"
 authors = ["Otávio Pace <otaviopp8@gmail.com>"]
 edition = "2018"
+readme = "README.md"
+keywords = ["lifecycle", "clojure", "component", "system"]
+documentation = "https://docs.rs/lifecycle/"
+repository = "https://github.com/otaviopace/lifecycle"
+license = "MIT"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
