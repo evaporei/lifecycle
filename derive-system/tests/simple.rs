@@ -17,5 +17,4 @@ pub struct ExampleSystem {
     _database: Database,
 }
 
-fn main() {
-}
+fn main() {}
