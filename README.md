@@ -2,9 +2,86 @@
 
 Rust implementation of https://github.com/stuartsierra/component.
 
-## To Do
+## Usage
 
-- [x] Lifecycle trait
-- [ ] System functions and/or macros
+```toml
+[dependencies]
+lifecycle = "0.1.0"
+system-derive = "0.1.0"
+```
 
-While Systems are not implemented in this library, they can be created manually by users, they just have to define correctly when each component should start/stop. There is an example on `lifecycle/src/tests/system.rs` that shows how to do it for now.
+## Example
+
+```rust
+use derive_system::System;
+use lifecycle::Lifecycle;
+
+struct App;
+impl Lifecycle for App {
+    fn start(self) -> Self {
+        println!("App::start");
+        Self
+    }
+
+    fn stop(self) -> Self {
+        println!("App::stop");
+        Self
+    }
+}
+
+struct Scheduler;
+impl Lifecycle for Scheduler {
+    fn start(self) -> Self {
+        println!("Scheduler::start");
+        Self
+    }
+
+    fn stop(self) -> Self {
+        println!("Scheduler::stop");
+        Self
+    }
+}
+
+struct Database;
+impl Lifecycle for Database {
+    fn start(self) -> Self {
+        println!("Database::start");
+        Self
+    }
+
+    fn stop(self) -> Self {
+        println!("Database::stop");
+        Self
+    }
+}
+
+#[derive(System)]
+pub struct ExampleSystem {
+    app: App,
+    scheduler: Scheduler,
+    database: Database,
+}
+
+fn main() {
+    let mut system = ExampleSystem {
+        app: App,
+        scheduler: Scheduler,
+        database: Database,
+    };
+
+    system = system.start();
+
+    let _ = system.stop();
+}
+```
+
+This outputs:
+
+```
+App::start
+Scheduler::start
+Database::start
+Database::stop
+Scheduler::stop
+App::stop
+```

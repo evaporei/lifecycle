@@ -30,17 +30,24 @@ fn expand_struct(struct_name: &Ident, data_struct: &DataStruct) -> Result<TokenS
     }
 }
 
-fn expand_named_struct(struct_name: &Ident, _fields: &Punctuated<Field, Comma>) -> TokenStream2 {
+fn expand_named_struct(struct_name: &Ident, fields: &Punctuated<Field, Comma>) -> TokenStream2 {
+    let field_name = fields.iter().map(|field| &field.ident);
+    let field_name_rev = fields.iter().map(|field| &field.ident).rev();
+
     quote! {
         impl lifecycle::Lifecycle for #struct_name {
             fn start(self) -> Self {
                 let mut s = self;
+
+                #(s.#field_name = s.#field_name.start();)*
 
                 s
             }
 
             fn stop(self) -> Self {
                 let mut s = self;
+
+                #(s.#field_name_rev = s.#field_name_rev.stop();)*
 
                 s
             }
