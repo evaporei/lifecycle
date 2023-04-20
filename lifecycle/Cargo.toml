@@ -1,9 +1,9 @@
 [package]
 name = "lifecycle"
-version = "0.1.0"
+version = "0.1.1"
 authors = ["Otávio Pace <otaviopp8@gmail.com>"]
 description = "Rust implementation of https://github.com/stuartsierra/component"
-edition = "2018"
+edition = "2021"
 readme = "README.md"
 keywords = ["lifecycle", "clojure", "component", "system"]
 documentation = "https://docs.rs/lifecycle/"
