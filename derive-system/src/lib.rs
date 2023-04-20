@@ -10,7 +10,7 @@ pub fn derive_system(input: TokenStream) -> TokenStream {
 
     let type_name = &input.ident;
 
-    system::expand(&type_name, &input.data)
+    system::expand(type_name, &input.data)
         .unwrap_or_else(|e| e.to_compile_error())
         .into()
 }
